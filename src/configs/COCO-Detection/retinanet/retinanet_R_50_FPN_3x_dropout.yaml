@@ -1,0 +1,6 @@
+_BASE_: "Base-COCO-RetinaNet.yaml"
+
+MODEL:
+    PROBABILISTIC_MODELING:
+        # Settings for monte-carlo dropout
+        DROPOUT_RATE: 0.1 # 0.0 for no dropout

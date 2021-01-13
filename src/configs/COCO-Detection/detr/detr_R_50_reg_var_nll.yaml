@@ -1,0 +1,8 @@
+_BASE_: "Base-COCO-DETR.yaml"
+
+MODEL:
+    PROBABILISTIC_MODELING:
+        # One of the following Loss types: 'none' or 'negative_log_likelihood', 'second_moment_matching', 'energy_loss'.
+        BBOX_COV_LOSS:
+            NAME: 'negative_log_likelihood'
+            COVARIANCE_TYPE: 'diagonal' # One of the following: 'full', 'diagonal'

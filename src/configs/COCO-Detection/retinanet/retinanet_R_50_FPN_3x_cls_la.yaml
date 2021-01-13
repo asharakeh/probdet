@@ -1,0 +1,8 @@
+_BASE_: "Base-COCO-RetinaNet.yaml"
+
+MODEL:
+    PROBABILISTIC_MODELING:
+        # One of the following Loss types: loss_attenuation'.
+        CLS_VAR_LOSS:
+            NAME: 'loss_attenuation'
+            NUM_SAMPLES: 3

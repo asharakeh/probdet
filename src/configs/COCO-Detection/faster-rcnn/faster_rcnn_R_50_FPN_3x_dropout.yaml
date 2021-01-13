@@ -1,0 +1,9 @@
+_BASE_: "Base-COCO-RCNN-FPN.yaml"
+
+MODEL:
+    ROI_BOX_HEAD:
+        NAME: "DropoutFastRCNNConvFCHead"
+
+    PROBABILISTIC_MODELING:
+        # Settings for monte-carlo dropout
+        DROPOUT_RATE: 0.1 # 0.0 for no dropouts

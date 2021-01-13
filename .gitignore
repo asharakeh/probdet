@@ -1,0 +1,13 @@
+# Output
+data
+
+# Irrelevant folders
+/survey_evaluation/
+
+# PyCharm
+.idea
+
+# Python
+*.pyc
+__pycache__
+
