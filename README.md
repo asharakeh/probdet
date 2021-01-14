@@ -175,10 +175,10 @@ If you use this code, please cite our paper:
 @inproceedings{
 harakeh2021estimating,
 title={Estimating and Evaluating Regression Predictive Uncertainty in Deep Object Detectors},
-author={Harakeh, Ali and Waslander, Steven L.},
-booktitle={9th International Conference on Learning Representations (ICLR)},
+author={Ali Harakeh and Steven L. Waslander},
+booktitle={International Conference on Learning Representations},
 year={2021},
-url={https://openreview.net/forum?id=YLewtnvKgR7},
+url={https://openreview.net/forum?id=YLewtnvKgR7}
 }
 ```
 
