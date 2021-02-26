@@ -96,7 +96,7 @@ def main(args):
     if 'ood' in args.test_dataset:
         compute_ood_probabilistic_metrics.main(args, cfg)
     else:
-        #compute_average_precision.main(args, cfg)
+        compute_average_precision.main(args, cfg)
         compute_probabilistic_metrics.main(args, cfg)
         compute_calibration_errors.main(args, cfg)
 
