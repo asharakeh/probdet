@@ -133,7 +133,8 @@ class ProbabilisticDetr(META_ARCH_REGISTRY.get('Detr')):
         else:
             box_cls = output["pred_logits"]
             box_pred = output["pred_boxes"]
-            results = self.inference(box_cls, box_pred, images.image_sizes)
+            mask_pred = output["pred_masks"] if self.mask_on else None
+            results = self.inference(box_cls, box_pred, mask_pred, images.image_sizes)
             processed_results = []
             for results_per_image, input_per_image, image_size in zip(
                     results, batched_inputs, images.image_sizes):
