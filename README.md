@@ -7,11 +7,8 @@ is meant to be a starter kit for entering the domain of probabilistic object det
 ## Disclaimer
 This research code was produced by one person with a single set of eyes, it may contain bugs and errors that I did not notice by the time of release.
 
-## ToDo
- 1. Code cleanup.
- 2. Add configurations that enable full usage of all functions in repo.
- 3. Make evaluator more modular. Im hoping to write an evaluator class when time allows.
- 4. Update repository with more uncertainty estimation mechanisms for both classification and regression tasks such as [Dirichlet prior networks](https://arxiv.org/abs/1802.10501).
+## Updates
+ 1. Added pip frozen requirements (requirements_pip_freeze.txt).
  
 ## Requirements
 #### Software Support:
@@ -19,9 +16,9 @@ Name | Supported Versions
 --- | --- |
 Ubuntu |20.04
 Python |3.8
-CUDA |11.0, 11.1
-Cudnn |8.0.1
-PyTorch |1.7.1
+CUDA |11.0+
+Cudnn |8.0.1+
+PyTorch |1.8+
 
 To install requirements choose between a python virtualenv or build a docker image using the provided Dockerfile.
 ```
