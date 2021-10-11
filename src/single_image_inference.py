@@ -20,7 +20,7 @@ from detectron2.data.transforms import ResizeShortestEdge
 # Project imports
 from core.evaluation_tools.evaluation_utils import get_train_contiguous_id_to_test_thing_dataset_id_dict
 from core.setup import setup_config, setup_arg_parser
-from probabilistic_inference.inference_utils import instances_to_json, get_inference_output_dir, build_predictor
+from probabilistic_inference.inference_utils import instances_to_json, build_predictor
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -33,9 +33,13 @@ def main(args):
     # Make sure only 1 data point is processed at a time. This simulates
     # deployment.
     cfg.defrost()
-    cfg.SOLVER.IMS_PER_BATCH = 1
     cfg.DATALOADER.NUM_WORKERS = 32
+    cfg.SOLVER.IMS_PER_BATCH = 1
+
     cfg.MODEL.DEVICE = device.type
+
+    # Set up number of cpu threads#
+    torch.set_num_threads(cfg.DATALOADER.NUM_WORKERS)
 
     # Create inference output directory
     inference_output_dir = os.path.expanduser(args.output_dir)
@@ -92,18 +96,17 @@ def main(args):
 
                     # predictor.visualize_inference(input_im, outputs)
 
-                    final_output_list.extend(
-                        instances_to_json(
-                            outputs,
-                            input_im[0]['image_id'],
-                            cat_mapping_dict))
+                    final_output_list.extend(instances_to_json(
+                        outputs,
+                        input_im[0]['image_id'],
+                        cat_mapping_dict))
                     pbar.update(1)
                 else:
                     print('Failed to read image {}'.format(input_file_name))
 
-                with open(os.path.join(inference_output_dir, 'results.json'), 'w') as fp:
-                    json.dump(final_output_list, fp, indent=4,
-                              separators=(',', ': '))
+            with open(os.path.join(inference_output_dir, 'results.json'), 'w') as fp:
+                json.dump(final_output_list, fp, indent=4,
+                          separators=(',', ': '))
 
 
 if __name__ == "__main__":
