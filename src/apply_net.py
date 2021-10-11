@@ -33,13 +33,13 @@ def main(args):
     # Make sure only 1 data point is processed at a time. This simulates
     # deployment.
     cfg.defrost()
-    cfg.DATALOADER.NUM_WORKERS = 32
+    cfg.DATALOADER.NUM_WORKERS = 0
     cfg.SOLVER.IMS_PER_BATCH = 1
 
     cfg.MODEL.DEVICE = device.type
 
     # Set up number of cpu threads#
-    torch.set_num_threads(cfg.DATALOADER.NUM_WORKERS)
+   # torch.set_num_threads(cfg.DATALOADER.NUM_WORKERS)
 
     # Create inference output directory and copy inference config file to keep
     # track of experimental settings

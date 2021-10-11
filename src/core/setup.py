@@ -20,7 +20,8 @@ import core
 
 from core.datasets.setup_datasets import setup_all_datasets
 from probabilistic_modeling.probabilistic_retinanet import ProbabilisticRetinaNet
-from probabilistic_modeling.probabilistic_generalized_rcnn import ProbabilisticGeneralizedRCNN, DropoutFastRCNNConvFCHead, ProbabilisticROIHeads
+from probabilistic_modeling.probabilistic_generalized_rcnn import ProbabilisticGeneralizedRCNN, \
+    DropoutFastRCNNConvFCHead, ProbabilisticROIHeads
 from probabilistic_modeling.probabilistic_detr import ProbabilisticDetr
 
 
@@ -38,7 +39,7 @@ def setup_arg_parser():
         "--dataset-dir",
         type=str,
         default="",
-        help="path to dataset directory")
+        help="path to dataset directory.")
 
     arg_parser.add_argument(
         "--random-seed",
@@ -83,6 +84,25 @@ def setup_arg_parser():
         type=float,
         default=0.0,
         help="Evaluation parameter:Minimum classification score for which a detection is considered in the evaluation.")
+
+    # Single image inference parameters
+    arg_parser.add_argument(
+        "--model-ckpt",
+        type=str,
+        default="",
+        help="Single image inference parameter: path to model checkpoint used for inference.")
+
+    arg_parser.add_argument(
+        "--image-dir",
+        type=str,
+        default="",
+        help="Single image inference parameter: path to image directory")
+
+    arg_parser.add_argument(
+        "--output-dir",
+        type=str,
+        default="",
+        help="Single image inference parameter: path to save results")
 
     return arg_parser
 

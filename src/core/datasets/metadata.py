@@ -23,8 +23,8 @@ OPEN_IMAGES_TO_COCO = {'Person': 'person',
                        'Dog': 'dog',
                        'Horse': 'horse',
                        'Sheep': 'sheep',
-                       'Elephant': 'cow',
-                       'Cattle': 'elephant',
+                       'Elephant': 'elephant',
+                       'Cattle': 'cow',
                        'Bear': 'bear',
                        'Zebra': 'zebra',
                        'Giraffe': 'giraffe',
@@ -97,7 +97,8 @@ OPENIMAGES_THING_DATASET_ID_TO_CONTIGUOUS_ID = dict(
 # MAP COCO to OpenImages contiguous id to be used for inference on OpenImages for models
 # trained on COCO.
 COCO_TO_OPENIMAGES_CONTIGUOUS_ID = dict(ChainMap(
-    *[{COCO_THING_CLASSES.index(openimages_thing_class): COCO_THING_CLASSES.index(openimages_thing_class)} for openimages_thing_class in
+    *[{COCO_THING_CLASSES.index(openimages_thing_class): COCO_THING_CLASSES.index(openimages_thing_class)} for
+      openimages_thing_class in
       COCO_THING_CLASSES]))
 
 # Construct VOC metadata

@@ -8,8 +8,11 @@ is meant to be a starter kit for entering the domain of probabilistic object det
 This research code was produced by one person with a single set of eyes, it may contain bugs and errors that I did not notice by the time of release.
 
 ## Updates
- 1. Added pip frozen requirements (requirements_pip_freeze.txt).
- 
+ Date | Change
+--- | --- |
+**30-September-2021** |Added pip frozen requirements (requirements_pip_freeze.txt).
+**10-October-2021** | Added ability to perform [inference on images](#inference-on-new-images) without passing through specific dataset handlers.
+
 ## Requirements
 #### Software Support:
 Name | Supported Versions
@@ -106,6 +109,22 @@ In addition, ```--image-corruption-level``` has no effect when used with OpenIma
 `--test-dataset` can be one of `coco_2017_custom_val`, `openimages_val`, or `openimages_ood_val`. `--dataset-dir` corresponds to the root directory of the dataset used.
 Evaluation code will run inference on the test dataset and then will generate mAP, Negative Log Likelihood, Brier Score, Energy Score, and Calibration Error results. If only evaluation of metrics is required,
 add `--eval-only` to the above code snippet.
+
+## Inference on new images
+We provide a script to perform inference on new images without passing through dataset handlers.
+
+```
+python single_image_inference.py 
+--image-dir /path/to/image/dir
+--output-dir /path/to/output/dir
+--config-file /path/to/config/file 
+--inference-config /path/to/inference/config 
+--model-ckpt /path/to/model.pth
+```
+
+`image-dir` is a folder containing all images to be used for inference. `output-dir` is a folder to write the output 
+json file containing probabilistic detections. `model-ckpt` is the path to the model checkpoint to be used for 
+inference. Look below to download model checkpoints.
 
 ## Configurations in the paper
 We provide a list of config combinations that generate the architectures used in our paper:
