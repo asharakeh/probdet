@@ -34,11 +34,11 @@ def main(args):
     # deployment.
     cfg.defrost()
     cfg.SOLVER.IMS_PER_BATCH = 1
-
+    cfg.DATALOADER.NUM_WORKERS = 32
     cfg.MODEL.DEVICE = device.type
 
     # Create inference output directory
-    inference_output_dir = args.output_dir
+    inference_output_dir = os.path.expanduser(args.output_dir)
     os.makedirs(inference_output_dir, exist_ok=True)
 
     # Get category mapping dictionary. Mapping here is from coco-->coco
@@ -70,32 +70,36 @@ def main(args):
     with torch.no_grad():
         with tqdm.tqdm(total=len(image_list)) as pbar:
             for idx, input_file_name in enumerate(image_list):
+
                 # Read image, apply shortest edge resize, and change to channel first position
                 cv2_image = cv2.imread(os.path.join(image_folder, input_file_name))
-                shape = cv2_image.shape
-                height = shape[0]
-                width = shape[1]
-                output_transform = resizer.get_transform(cv2_image)
-                cv2_image = output_transform.apply_image(cv2_image)
-                input_im_tensor = torch.tensor(cv2_image).to(
-                ).permute(2, 0, 1)
-                input_im = [dict({'filename': input_file_name,
-                                  'image_id': input_file_name,
-                                  'height': height,
-                                  'width': width,
-                                  'image': input_im_tensor})]
+                if cv2_image.size != 0:
+                    shape = cv2_image.shape
+                    height = shape[0]
+                    width = shape[1]
+                    output_transform = resizer.get_transform(cv2_image)
+                    cv2_image = output_transform.apply_image(cv2_image)
+                    input_im_tensor = torch.tensor(cv2_image).to(
+                    ).permute(2, 0, 1)
+                    input_im = [dict({'filename': input_file_name,
+                                      'image_id': input_file_name,
+                                      'height': height,
+                                      'width': width,
+                                      'image': input_im_tensor})]
 
-                # Perform inference
-                outputs = predictor(input_im)
+                    # Perform inference
+                    outputs = predictor(input_im)
 
-                # predictor.visualize_inference(input_im, outputs)
+                    # predictor.visualize_inference(input_im, outputs)
 
-                final_output_list.extend(
-                    instances_to_json(
-                        outputs,
-                        input_im[0]['image_id'],
-                        cat_mapping_dict))
-                pbar.update(1)
+                    final_output_list.extend(
+                        instances_to_json(
+                            outputs,
+                            input_im[0]['image_id'],
+                            cat_mapping_dict))
+                    pbar.update(1)
+                else:
+                    print('Failed to read image {}'.format(input_file_name))
 
                 with open(os.path.join(inference_output_dir, 'results.json'), 'w') as fp:
                     json.dump(final_output_list, fp, indent=4,
